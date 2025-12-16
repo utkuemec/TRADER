@@ -243,23 +243,8 @@ CACHE_TTL_ANALYSIS=60
 - **Lightweight Charts** - TradingView-style charts
 - **Lucide Icons** - Icon library
 
----
-
-## 📝 License
-
-MIT License - feel free to use this for your own trading analysis needs.
-
----
 
 ## ⚠️ Disclaimer
 
 This platform is for **educational and research purposes only**. Cryptocurrency trading involves substantial risk. Past performance does not guarantee future results. Always do your own research and never invest more than you can afford to lose.
-
----
-
-<div align="center">
-
-**Built with 💎 for serious traders**
-
-</div>
 
