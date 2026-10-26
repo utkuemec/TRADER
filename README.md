@@ -1,13 +1,13 @@
-# 🚀 TRADER - Institutional Crypto Analysis Platform
+# TRADER — Multi-Timeframe Crypto Market Analysis
 
 <div align="center">
 
-![TRADER Platform](https://img.shields.io/badge/TRADER-Institutional%20Analysis-00f5ff?style=for-the-badge&labelColor=0a0a0f)
-![Python](https://img.shields.io/badge/Python-3.11+-00ff9d?style=for-the-badge&logo=python&logoColor=white&labelColor=0a0a0f)
-![React](https://img.shields.io/badge/React-18+-ff00ff?style=for-the-badge&logo=react&logoColor=white&labelColor=0a0a0f)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-00f5ff?style=for-the-badge&logo=typescript&logoColor=white&labelColor=0a0a0f)
+![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)
+![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)
 
-**Elite, institutional-grade cryptocurrency trading analysis platform**
+**Async FastAPI service + React dashboard that pulls live OHLCV data from five exchanges, computes technical and market-structure features across 10 timeframes, and combines a set of statistical estimators into 1h / 1d / 1w price-target ranges with confidence scores.**
 
 </div>
 
@@ -37,11 +37,11 @@
 - **Liquidity Zones**: Buy-side & Sell-side liquidity mapping
 - **Supply & Demand Zones**: Fresh zone identification
 
-### 🎯 Price Predictions
-- **1 Hour Outlook**: Short-term directional bias
-- **1 Day Outlook**: Daily trend prediction
-- Confidence scoring (Low/Medium/High)
+### 🎯 Price-Target Estimation (signal ensemble)
+- ~15 independent estimators: weighted momentum, linear-regression projection, mean reversion, ATR / volatility projection, swing projection, Fibonacci, VWAP, volume profile, divergence, order-block, liquidity and FVG targets
+- Estimates are weighted by agreement (confluence) into **1h / 1d / 1w** target ranges with Low / Medium / High confidence
 - Key levels with invalidation points
+- Prediction cache to avoid recomputation on hot symbols
 
 ### 🖥️ Modern Dashboard
 - Real-time price updates
@@ -144,7 +144,7 @@ The dashboard will be available at `http://localhost:5173`
 ### Analysis
 | Endpoint | Description |
 |----------|-------------|
-| `GET /api/v1/analysis/full/{symbol}` | **Full institutional analysis** |
+| `GET /api/v1/analysis/full/{symbol}` | **Full multi-timeframe analysis** |
 | `GET /api/v1/analysis/indicators/{symbol}` | Technical indicators only |
 | `GET /api/v1/analysis/structure/{symbol}` | Market structure only |
 | `GET /api/v1/analysis/fibonacci/{symbol}` | Fibonacci levels |
@@ -231,7 +231,7 @@ CACHE_TTL_ANALYSIS=60
 ### Backend
 - **FastAPI** - High-performance async web framework
 - **CCXT** - Cryptocurrency exchange library
-- **pandas-ta** - Technical analysis library
+- **ta** - Technical analysis indicators
 - **NumPy & SciPy** - Scientific computing
 
 ### Frontend
@@ -243,6 +243,15 @@ CACHE_TTL_ANALYSIS=60
 - **Lightweight Charts** - TradingView-style charts
 - **Lucide Icons** - Icon library
 
+
+## 🧪 Evaluation & Roadmap
+
+The estimators are rule-based and statistical (no trained model yet). Next steps to make the predictions measurable:
+
+- [ ] Walk-forward backtest on historical OHLCV: directional accuracy and MAE of 1h / 1d targets vs. naive baselines (last close, drift)
+- [ ] Calibration check: do "High confidence" calls actually hit more often than "Low"?
+- [ ] Learn the ensemble weights (e.g. gradient boosting on estimator outputs) instead of fixed heuristics
+- [ ] Unit tests for indicator and market-structure functions
 
 ## ⚠️ Disclaimer
 
